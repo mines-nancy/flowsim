@@ -86,14 +86,14 @@ export default function Sliders({ onChange }) {
                         <Input
                             name="s0"
                             className={classes.input}
-                            value={values.lambda}
+                            value={values.s0}
                             margin="dense"
                             onChange={(event, name) => handleInputChange(event, 's0')}
                             onBlur={(event, newValue, name) => handleBlur(event, newValue, 's0')}
                             inputProps={{
                                 step: 1,
-                                min: 1,
-                                max: 20,
+                                min: 0,
+                                max: 1,
                                 type: 'number',
                                 'aria-labelledby': 'input-slider',
                             }}
