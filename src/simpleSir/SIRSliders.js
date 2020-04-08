@@ -24,47 +24,38 @@ export default function Sliders({ onChange }) {
 
     const t = useTranslate();
 
-    const s0 = { step: 0.01, min: 0, max: 1 };
-    const lambda = { step: 1, min: 1, max: 20 };
-    const beta = { step: 0.01, min: 0, max: 1 };
+    const [value_s0, setValue_s0] = React.useState(0);
+    const [value_lambda, setValue_lambda] = React.useState(1);
+    const [value_beta, setValue_beta] = React.useState(0);
 
-    const params = { s0: s0, lambda: lambda, beta: beta };
+    const values = { s0: value_s0, lambda: value_lambda, beta: value_beta };
+    const setValues = {};
+    setValues.s0 = setValue_s0;
+    setValues.lambda = setValue_lambda;
+    setValues.beta = setValue_beta;
 
-    const [value_s0, setValue_s0] = React.useState(params['s0']['min']);
-    const [value_lambda, setValue_lambda] = React.useState(params['lambda']['min']);
-    const [value_beta, setValue_beta] = React.useState(params['beta']['min']);
+    const handleSliderChange = (event, newValue, name) => {
+        const setVal = setValues[name];
+        setVal(newValue);
+        onChange({
+            s0: parseFloat(values.s0),
+            lambda: parseFloat(values.lambda),
+            beta: parseFloat(values.beta),
+        });
+    };
 
-    params['s0']['value'] = value_s0;
-    params['s0']['setValue'] = setValue_s0;
-    params['lambda']['value'] = value_lambda;
-    params['lambda']['setValue'] = setValue_lambda;
-    params['beta']['value'] = value_beta;
-    params['beta']['setValue'] = setValue_beta;
+    const handleInputChange = (event, name) => {
+        setValues[name](event.target.value === '' ? '' : Number(event.target.value));
+    };
 
-    for (const param in params) {
-        params[param]['handleSliderChange'] = (event, newValue) => {
-            params[param]['setValue'](newValue);
-            onChange({
-                s0: parseFloat(params['s0']['value']),
-                lambda: parseFloat(params['lambda']['value']),
-                beta: parseFloat(params['beta']['value']),
-            });
-
-            params[param]['handleInputChange'] = (event) => {
-                params[param]['setValue'](
-                    event.target.value === '' ? '' : Number(event.target.value),
-                );
-            };
-
-            params[param]['handleBlur'] = (event, param) => {
-                if (params[param]['value'] < params[param]['min']) {
-                    params['param']['setValue'](params[param]['min']);
-                } else if (params[param]['value'] > params[param]['max']) {
-                    params[param]['setValue'](params[param]['max']);
-                }
-            };
-        };
-    }
+    const handleBlur = (event, param, name) => {
+        if (event.target.value < event.target.inputProps.min) {
+            setValues[name](event.targetinputProps.min);
+        }
+        if (event.target.value > event.target.inputProps.max) {
+            setValues[name](event.target.inputProps.max);
+        }
+    };
 
     return (
         <Grid
@@ -74,46 +65,44 @@ export default function Sliders({ onChange }) {
             justify="right"
             alignItems="center"
         >
-            {/* <Grid item>
+            <Grid item>
                 <Typography id="input-slider" gutterBottom>
                     Paramètre s0
                 </Typography>
                 <Grid container spacing={2} alignItems="center">
                     <Grid item xs>
                         <Slider
+                            name="s0"
                             className={classes.slider}
-                            value={
-                                typeof params['s0']['value'] === 'number'
-                                    ? params['s0']['value']
-                                    : params['s0']['max']
-                            }
-                            min={params['s0']['min']}
-                            max={params['s0']['max']}
-                            step={params['s0']['step']}
-                            onChange={params['s0']['handleSliderChange']}
+                            value={typeof values.s0 === 'number' ? values.s0 : 1}
+                            min={0}
+                            max={1}
+                            step={0.01}
+                            onChange={(event, newValue, name) => handleSliderChange(event, newValue, 's0')}
                             aria-labelledby="input-slider"
                         />
                     </Grid>
                     <Grid item>
                         <Input
+                            name="s0"
                             className={classes.input}
-                            value={params['s0']['value']}
+                            value={values.lambda}
                             margin="dense"
-                            onChange={params['s0']['handleInputChange']}
-                            onBlur={params['s0']['handleBlur']}
+                            onChange={(event, name) => handleInputChange(event, 's0')}
+                            onBlur={(event, newValue, name) => handleBlur(event, newValue, 's0')}
                             inputProps={{
-                                step: params['s0']['step'],
-                                min: params['s0']['min'],
-                                max: params['s0']['max'],
+                                step: 1,
+                                min: 1,
+                                max: 20,
                                 type: 'number',
                                 'aria-labelledby': 'input-slider',
                             }}
                         />
                     </Grid>
                 </Grid>
-            </Grid> */}
+            </Grid>
 
-             <CreateSlider name="s0" parameters={params} />
+            {/* <CreateSlider name="s0" parameters={params} /> */}
 
             <Grid item>
                 <Typography id="input-slider" gutterBottom>
@@ -122,30 +111,28 @@ export default function Sliders({ onChange }) {
                 <Grid container spacing={2} alignItems="center">
                     <Grid item xs>
                         <Slider
+                            name="lambda"
                             className={classes.slider}
-                            value={
-                                typeof params['lambda']['value'] === 'number'
-                                    ? params['lambda']['value']
-                                    : params['lambda']['max']
-                            }
-                            min={params['lambda']['min']}
-                            max={params['lambda']['max']}
-                            step={params['lambda']['step']}
-                            onChange={params['lambda']['handleSliderChange']}
+                            value={typeof values.lambda === 'number' ? values.lambda : 1}
+                            min={1}
+                            max={20}
+                            step={1}
+                            onChange={(event, newValue, name) => handleSliderChange(event, newValue, 'lambda')}
                             aria-labelledby="input-slider"
                         />
                     </Grid>
                     <Grid item>
                         <Input
+                            name="lambda"
                             className={classes.input}
-                            value={params['lambda']['value']}
+                            value={values.lambda}
                             margin="dense"
-                            onChange={params['lambda']['handleInputChange']}
-                            onBlur={params['lambda']['handleBlur']}
+                            onChange={(event, name) => handleInputChange(event, 'lambda')}
+                            onBlur={(event, newValue, name) => handleBlur(event, newValue, 'lambda')}
                             inputProps={{
-                                step: params['lambda']['step'],
-                                min: params['lambda']['min'],
-                                max: params['lambda']['max'],
+                                step: 1,
+                                min: 1,
+                                max: 20,
                                 type: 'number',
                                 'aria-labelledby': 'input-slider',
                             }}
@@ -161,29 +148,26 @@ export default function Sliders({ onChange }) {
                     <Grid item xs>
                         <Slider
                             className={classes.slider}
-                            value={
-                                typeof params['beta']['value'] === 'number'
-                                    ? params['beta']['value']
-                                    : 0
-                            }
-                            min={params['beta']['min']}
-                            max={params['beta']['max']}
-                            step={params['beta']['step']}
-                            onChange={params['beta']['handleSliderChange']}
+                            name="beta"
+                            value={typeof values.beta ? values.beta : 0}
+                            min={0}
+                            max={1}
+                            step={0.01}
+                            onChange={(event, newValue, name) => handleSliderChange(event, newValue, 'beta')}
                             aria-labelledby="input-slider"
                         />
                     </Grid>
                     <Grid item>
                         <Input
                             className={classes.input}
-                            value={params['beta']['value']}
+                            value={values.beta}
                             margin="dense"
-                            onChange={params['beta']['handleInputChange']}
-                            onBlur={params['beta']['handleBlur']}
+                            onChange={(event, name) => handleInputChange(event, 'beta')}
+                            onBlur={(event, newValue, name) => handleBlur(event, newValue, 'beta')}
                             inputProps={{
-                                step: params['beta']['step'],
-                                min: params['beta']['min'],
-                                max: params['beta']['max'],
+                                step: 0.01,
+                                min: 0,
+                                max: 1,
                                 type: 'number',
                                 'aria-labelledby': 'input-slider',
                             }}

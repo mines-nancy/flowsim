@@ -17,7 +17,7 @@ import Input from '@material-ui/core/Input';
     },
 }); */
 
-const CreateSlider = (name, parameters) => {
+const CreateSlider = ({name, parameters}) => {
     //const classes = useStyles();
 
     return (
