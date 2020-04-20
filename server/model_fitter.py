@@ -25,6 +25,17 @@ def run_model(params: [float]):
 
 
 << << << < HEAD
+== == == =
+constants = {'population': 1000000, 'patient0': patient0, 'lim_time': 150}
+delays = {'dm_incub': 3, 'dm_r': 9, 'dm_h': 6,
+          'dm_sm': 6, 'dm_si': 8, 'dm_ss': 14}
+coefficients = {'kpe': 1, 'r': 1, 'beta': beta_pre, 'pc_ir': 1 - pc_ih, 'pc_ih': pc_ih, 'pc_sm': 1 - pc_si,
+                'pc_si': pc_si,  'pc_sm_si': pc_sm_si, 'pc_sm_out': 1 - pc_sm_si, 'pc_si_dc': 0.5, 'pc_si_out': 0.5,
+                'pc_h_ss': 0.2, 'pc_h_r': 0.8}
+rules = [{'field': 'beta', 'value': beta_post, 'date': 53}]
+>>>>>> > d518edb... Params display
+
+<< << << < HEAD
 constants = {'population': 1000000, 'patient0': patient0, 'lim_time': 150}
 == == == =
 constants = {'population': 1000000, 'patient0': patient0, 'lim_time': 250}
@@ -76,7 +87,10 @@ if __name__ == "__main__":
     r0_pre = beta_pre*9
     r0_post = beta_post*9
 
+    print(res.x)
     print("Optimal parameters: ")
+    print(f" - beta_ore: {beta_pre}")
+    print(f" - beta_post:{beta_post}")
     print(f" - r0_pre:   {round(r0_pre, 3)}")
     print(f" - r0_post:  {round(r0_post, 3)}")
     print(f" - patient0: {round(patient0, 3)}")
