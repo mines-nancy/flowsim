@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from models.simulator import run_sir_h
+from models.sir_h.simulator import run_sir_h
 from scipy.optimize import minimize
 from scipy.optimize import Bounds
 import numpy as np
@@ -31,7 +31,7 @@ def run_model(params: [float]):
                     'pc_h_ss': 0.2, 'pc_h_r': 0.8}
     rules = [{'field': 'beta', 'value': beta_post, 'date': 53}]
 
-    lists = run_sir_h(constants, delays, coefficients, rules)
+    lists = run_sir_h(parameters, rules)
 
     spike_height = max(lists["SI"])
     spike_date = lists["SI"].index(spike_height)
