@@ -71,7 +71,10 @@ if __name__ == "__main__":
     r0_pre = beta_pre*9
     r0_post = beta_post*9
 
+    print(res.x)
     print("Optimal parameters: ")
+    print(f" - beta_ore: {beta_pre}")
+    print(f" - beta_post:{beta_post}")
     print(f" - r0_pre:   {round(r0_pre, 3)}")
     print(f" - r0_post:  {round(r0_post, 3)}")
     print(f" - patient0: {round(patient0, 3)}")
