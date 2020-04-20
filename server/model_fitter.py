@@ -43,14 +43,12 @@ def obj_func(x, goal):
     pred_height, pred_date = run_model(x)
     goal_height, goal_date = goal
 
-    date_weight = 100
-
-    return (pred_height - goal_height)**2 + date_weight*(pred_date - goal_date)**2
+    return (pred_height/goal_height - 1)**2 + (pred_date/goal_date - 1)**2
 
 
 if __name__ == "__main__":
-    target_height = 180
-    target_date = 78
+    target_height = 180  # 180
+    target_date = 78     # 78
     # -> 11/04
 
     target = np.array([target_height, target_date])
