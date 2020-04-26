@@ -4,12 +4,13 @@ from models.sir_h.simulator import run_sir_h
 from scipy.optimize import minimize
 from scipy.optimize import Bounds
 import numpy as np
+from models.rule import RuleChangeField
 
 """
 Objectif: Coller au jour et a la hauteur du pic de rea
 
 Parametres ajustables:
- - beta pre-coninement
+ - beta pre-confinement
  - beta post-confinement
  - patient0
  - Parametres hospitaliers
@@ -22,14 +23,17 @@ Parametres ajustables:
 def run_model(params: [float]):
 
     beta_pre, beta_post, patient0, pc_ih, pc_si, pc_sm_si = params
+    print(f'beta_pre={beta_pre} beta_post={beta_post}')
+    parameters = {'population': 1000000, 'patient0': patient0, 'lim_time': 200,
+                  'dm_incub': 3, 'dm_r': 9, 'dm_h': 6, 'dm_sm': 6, 'dm_si': 8, 'dm_ss': 14,
+                  'kpe': 1, 'r': 1, 'beta': beta_pre,
+                  'pc_ir': 1 - pc_ih, 'pc_ih': pc_ih,
+                  'pc_sm': 1 - pc_si, 'pc_si': pc_si,
+                  'pc_sm_si': pc_sm_si, 'pc_sm_dc': (1-pc_sm_si)*.25, 'pc_sm_out': (1-pc_sm_si*.75),
+                  'pc_si_dc': 0.5, 'pc_si_out': 0.5,
+                  'pc_h_ss': 0.2, 'pc_h_r': 0.8}
 
-    constants = {'population': 1000000, 'patient0': patient0, 'lim_time': 150}
-    delays = {'dm_incub': 3, 'dm_r': 9, 'dm_h': 6,
-              'dm_sm': 6, 'dm_si': 8, 'dm_ss': 14}
-    coefficients = {'kpe': 1, 'r': 1, 'beta': beta_pre, 'pc_ir': 1 - pc_ih, 'pc_ih': pc_ih, 'pc_sm': 1 - pc_si,
-                    'pc_si': pc_si,  'pc_sm_si': pc_sm_si, 'pc_sm_out': 1 - pc_sm_si, 'pc_si_dc': 0.5, 'pc_si_out': 0.5,
-                    'pc_h_ss': 0.2, 'pc_h_r': 0.8}
-    rules = [{'field': 'beta', 'value': beta_post, 'date': 53}]
+    rules = [RuleChangeField(53,  'beta',  beta_post)]
 
     lists = run_sir_h(parameters, rules)
 
@@ -73,7 +77,7 @@ if __name__ == "__main__":
 
     print(res.x)
     print("Optimal parameters: ")
-    print(f" - beta_ore: {beta_pre}")
+    print(f" - beta_pre: {beta_pre}")
     print(f" - beta_post:{beta_post}")
     print(f" - r0_pre:   {round(r0_pre, 3)}")
     print(f" - r0_post:  {round(r0_post, 3)}")
@@ -85,11 +89,3 @@ if __name__ == "__main__":
     print(
         f" - spike_height: {round(spike_height, 3)} (targer: {round(target_height, 3)})")
     print(f" - spike_date:   {spike_date} (targer: {target_date})")
-
-    constants = {'population': 1000000, 'patient0': 100, 'lim_time': 150}
-    delays = {'dm_incub': 3, 'dm_r': 9, 'dm_h': 6,
-              'dm_sm': 6, 'dm_si': 8, 'dm_ss': 14}
-    coefficients = {'kpe': 1, 'r': 1, 'beta': 0.2920, 'pc_ir': 1 - 0.066, 'pc_ih': 0.066, 'pc_sm': 1 - 0.186,
-                    'pc_si': 0.186,  'pc_sm_si': 0.199, 'pc_sm_out': 1 - 0.199, 'pc_si_dc': 0.5, 'pc_si_out': 0.5,
-                    'pc_h_ss': 0.2, 'pc_h_r': 0.8}
-    rules = [{'field': 'beta', 'value': 0.0996, 'date': 53}]
