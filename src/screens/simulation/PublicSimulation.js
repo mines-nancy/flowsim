@@ -49,18 +49,23 @@ const useStyles = makeStyles((theme) => ({
             position: 'absolute',
             right: 20,
             top: 20,
-            width: 550,
+            left: 20,
             height: 350,
             zIndex: 999,
             pointerEvents: 'none',
         },
     },
-    blockContainer: {
+    legendTitle: {
+        textAlign: 'center',
+    },
+    legendBlockContainer: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-end',
-        paddingLeft: '33%',
+        width: 350,
+        marginLeft: 'auto',
         pointerEvents: 'none',
+        marginTop: '-54px',
     },
     blockRow: {
         display: 'flex',
@@ -171,7 +176,19 @@ const Legend = ({ stats, onLegendEnter = () => {}, onLegendLeave = () => {}, mob
 
     return (
         <GraphProvider>
-            <div className={classes.blockContainer}>
+            <div className={classes.legendTitle}>
+                <strong>
+                    {stats.date
+                        ? `Population au ${format(stats.date, 'dd/MM/yyyy')}`
+                        : 'Population impactée '}
+                    <br />
+                </strong>
+                <span>
+                    sur un échantillon de 1000 000 individus <br />
+                    dont 10% sont immunisés
+                </span>
+            </div>
+            <div className={classes.legendBlockContainer}>
                 <div className={classes.blockRow}>
                     <Node
                         name="sain"
@@ -356,7 +373,7 @@ const PublicSimulation = () => {
     const chartRef = useRef(null);
 
     const theme = useTheme();
-    const small = useMediaQuery(theme.breakpoints.down('sm'));
+    const small = useMediaQuery(theme.breakpoints.down('md'));
 
     const [graphTimeframes, setGraphTimeframes] = useState(
         extractGraphTimeframes(getTimeframesFromValues(initialValues)),
@@ -462,7 +479,7 @@ const PublicSimulation = () => {
                             initValue={timeframes[0].population}
                         />
                     </div>
-                    <div style={{ flex: 1, position: 'relative' }}>
+                    <div style={{ flex: 1, position: 'relative', paddingTop: small ? 0 : 50 }}>
                         <div className={classes.legend}>
                             <Legend
                                 stats={currentStats}
@@ -484,7 +501,10 @@ const PublicSimulation = () => {
                                           }
                                         : {
                                               height:
-                                                  windowHeight - 200 /* form */ - 32 /* footer */,
+                                                  windowHeight -
+                                                  200 /* form */ -
+                                                  32 /* footer */ -
+                                                  54 /* legend */,
                                               width: windowWidth - 100,
                                           }
                                 }
