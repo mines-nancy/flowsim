@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 """
     This file is part of MODSIR19.
@@ -20,11 +19,11 @@
     e-mail: Bart.Lamiroy@univ-lorraine.fr
 """
 
+import unittest
 import filecmp
 import os
 import subprocess
 import tempfile
-import unittest
 from tempfile import NamedTemporaryFile
 from os import remove
 from labs.defaults import export_json, import_json, get_default_params
@@ -48,7 +47,7 @@ class TestRunSimulator(unittest.TestCase):
 
             args = ['-m', 'labs.run_simulator', '--noplot',
                     '--path', tmp_dirname, '-p', param_pathname, '-s']
-            subprocess.call(['/usr/bin/python3', *args])
+            subprocess.call(['python3', *args])
 
             param_basename = os.path.splitext(
                 os.path.basename(param_pathname))[0]
@@ -56,8 +55,15 @@ class TestRunSimulator(unittest.TestCase):
 
             self.assertTrue(os.path.exists(result_file),
                             f'{result_file} does not exist')
-            self.assertTrue(filecmp.cmp(
-                result_file, reference_file), 'Files are not equal')
+
+            with open(result_file) as f:
+                l1 = [line for line in f]
+            with open(reference_file) as f:
+                l2 = [line for line in f]
+            for a, b in zip(l1, l2):
+                self.assertEqual(a, b)
+            # self.assertTrue(filecmp.cmp(
+                # result_file, reference_file), 'Files are not equal')
 
 
 if __name__ == '__main__':
