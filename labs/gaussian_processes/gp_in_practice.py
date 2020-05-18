@@ -20,7 +20,7 @@ import datetime
 import pandas as pd
 from bisect import bisect
 
-from labs.defaults import get_default_params
+from ..defaults import get_default_params
 
 '''
     Fonction d'interpolation linéaire

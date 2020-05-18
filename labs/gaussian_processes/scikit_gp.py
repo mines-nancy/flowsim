@@ -19,7 +19,7 @@ import datetime
 import pandas as pd
 from bisect import bisect
 
-from labs.defaults import get_default_params
+from ..defaults import get_default_params
 
 '''
     Fonction d'interpolation linéaire.parameters
@@ -267,8 +267,8 @@ if __name__ == '__main__':
         gp_mean = gp.mean(plot_range).flatten()
         gp_std = gp.std(plot_range).flatten()
 
-        gp_predictions = gp.mean(target_x_train).flatten()
-        gp_std_predictions = gp.std(target_x_train).flatten()
+        gp_predictions = gp.mean(target[train_sample_size:, 0]).flatten()
+        gp_std_predictions = gp.std(target[train_sample_size:, 0]).flatten()
 
     if not args.noplot and Paul:
 

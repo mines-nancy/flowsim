@@ -20,7 +20,7 @@
 """
 
 from typing import Dict
-from models.rule import RuleChangeField
+from flowsim.models.rule import RuleChangeField
 
 import json
 import re

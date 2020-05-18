@@ -19,10 +19,10 @@
     e-mail: Pierre-Etienne.Moreau@univ-lorraine.fr
 """
 
-from models.components.box import BoxSource, BoxTarget
-from models.components.box_dms import BoxDms
-from models.components.box_convolution import BoxConvolution
-from models.components.utils import compute_khi_exp, compute_khi_binom, compute_khi_delay
+from ..components.box import BoxSource, BoxTarget
+from ..components.box_dms import BoxDms
+from ..components.box_convolution import BoxConvolution
+from ..components.utils import compute_khi_exp, compute_khi_binom, compute_khi_delay
 from operator import add
 
 

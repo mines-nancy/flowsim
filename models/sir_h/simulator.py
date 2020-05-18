@@ -19,8 +19,8 @@
     e-mail: Pierre-Etienne.Moreau@univ-lorraine.fr
 """
 
-from models.sir_h.state import State
-from models.rule import apply_rules, apply_force_move
+from .state import State
+from ..rule import apply_rules, apply_force_move
 
 
 def run_sir_h(parameters, rules, data_chu=dict(), specific_series=None):
