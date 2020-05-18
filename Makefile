@@ -10,7 +10,7 @@ start: venv
 	python3 -O app.py
 
 unit: venv
-	python3 -m unittest discover -v
+	. venv/bin/activate; python3 -m unittest discover -v
 
 venv: venv/bin/activate
 
@@ -18,9 +18,6 @@ venv/bin/activate: requirements.txt
 	test -d venv || python3 -m venv venv
 	. venv/bin/activate; pip install -Ur requirements.txt
 	touch venv/bin/activate
-
-test: venv
-	. venv/bin/activate; nosetests project/test
 
 clean:
 	rm -rf venv
