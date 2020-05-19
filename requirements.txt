@@ -6,3 +6,4 @@ scipy==1.4.1
 matplotlib
 pandas
 lmfit
+gunicorn
