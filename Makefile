@@ -7,7 +7,7 @@ install:
 	pip install -r requirements.txt
 
 start: venv
-	python3 -O app.py
+	gunicorn --bind 0.0.0.0:5000 -w 16 server:app
 
 unit: venv
 	. venv/bin/activate; python3 -m unittest discover -v
