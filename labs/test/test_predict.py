@@ -37,9 +37,13 @@ class TestPredict(unittest.TestCase):
                         f'{param_pathname} does not exist')
 
         with tempfile.TemporaryDirectory() as tmp_dirname:
+            self.assertTrue(os.path.exists(tmp_dirname),
+                            f'Process did not create {tmp_dirname}')
+
             args = ['-m', 'labs.gaussian_processes.predict', '--silentplot',
                     '--path', tmp_dirname, '-s']
-            subprocess.call(['python3', *args])
+            r_code = subprocess.call(['python3', *args])
+            self.assertEqual(r_code, 0, f'labs.gaussian_processes.predict exited with code {r_code}')
 
             default_result_path_prefix = f'{tmp_dirname}/{"_".join([prefix])}'
             default_csv_file = default_result_path_prefix + '.csv'
