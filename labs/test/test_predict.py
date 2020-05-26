@@ -42,8 +42,8 @@ class TestPredict(unittest.TestCase):
 
             args = ['-m', 'labs.gaussian_processes.predict', '--silentplot',
                     '--path', tmp_dirname, '-s']
-            r_code = subprocess.call(['python3', *args])
-            self.assertEqual(r_code, 0, f'labs.gaussian_processes.predict exited with code {r_code}')
+            r_object = subprocess.run(['python3', *args])
+            self.assertEqual(r_object.returncode, 0, f'labs.gaussian_processes.predict exited with code {r_object.returncode} and {r_object.stderr}')
 
             default_result_path_prefix = f'{tmp_dirname}/{"_".join([prefix])}'
             default_csv_file = default_result_path_prefix + '.csv'
