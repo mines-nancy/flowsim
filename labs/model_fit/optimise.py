@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 """
-    This file is part of MODSIR19.
+    This file is part of Flowsim.
 
-    MODSIR19 is free software: you can redistribute it and/or modify
+    Flowsim is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    MODSIR19 is distributed in the hope that it will be useful,
+    Flowsim is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU Lesser General Public License for more details.
 
     You should have received a copy of the GNU Lesser General Public License
-    along with MODSIR19.  If not, see <https://www.gnu.org/licenses/>.
+    along with Flowsim.  If not, see <https://www.gnu.org/licenses/>.
 
     Copyright (c) 2020 Bart Lamiroy, Paul Festor, Romain Pajda
     e-mail: Bart.Lamiroy@univ-lorraine.fr, romainpajda@gmail.com, paul.festor2@etu.univ-lorraine.fr
@@ -40,6 +40,8 @@ from models.rule import RuleChangeField
 from labs.defaults import get_default_params, import_json, export_json
 from .ModelDiff import model_diff
 from .ModelDiscr import model_disc
+
+
 def plotter(time_indexes: np.ndarray, series: Dict[str, np.ndarray], x_ticks=None) -> None:
     series_label_base = {'SE': 'Susceptibles', 'INCUB': 'Incubés', 'I': 'Infectés', 'SI': 'Soins Intensifs',
                          'SM': 'Soins Médicaux', 'SS': 'Soins de Suite', 'R': 'Rétablis',
@@ -99,7 +101,7 @@ def plotter(time_indexes: np.ndarray, series: Dict[str, np.ndarray], x_ticks=Non
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(prog="python -m optimise",
-                                     description='Fit MODSIR-19 simulator parameters on provided measured data.')
+                                     description='Fit Flowsim simulator parameters on provided measured data.')
     parser.add_argument('-p', '--params', metavar='parameters', type=str, nargs=1,
                         help='pathname to initial parameter set (JSON)')
     parser.add_argument('-v', '--variables', metavar='variables', type=str, nargs=1,
@@ -197,7 +199,7 @@ if __name__ == "__main__":
             basename = outputdir + timestamp + args.save
         else:
             basename = outputdir + timestamp + \
-                'commando_covid_fit_' + args.model[0] + '_' + optim
+                'flowsim_fit_' + args.model[0] + '_' + optim
 
     ''' defining simulator model functions '''
     if args.model[0] == 'diff':

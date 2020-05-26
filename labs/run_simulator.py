@@ -1,26 +1,26 @@
 # -*- coding: utf-8 -*-
 """
-    This file is part of MODSIR19.
+    This file is part of Flowsim.
 
-    MODSIR19 is free software: you can redistribute it and/or modify
+    Flowsim is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    MODSIR19 is distributed in the hope that it will be useful,
+    Flowsim is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU Lesser General Public License for more details.
 
     You should have received a copy of the GNU Lesser General Public License
-    along with MODSIR19.  If not, see <https://www.gnu.org/licenses/>.
+    along with Flowsim.  If not, see <https://www.gnu.org/licenses/>.
 
     Copyright (c) 2020 Bart Lamiroy
     e-mail: Bart.Lamiroy@univ-lorraine.fr
 """
 
 """
-    This is mainly demo code showing how to invoke the MODSIR19 simulator with
+    This is mainly demo code showing how to invoke the Flowsim simulator with
     default parameters or with provided file of stored parameters
     python -m labs.run_simulator [options] from the server directory to run the simulator
 """
@@ -35,7 +35,7 @@ from models.sir_h.simulator import run_sir_h
 from .defaults import get_default_params, import_json
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(prog="python run_simulator.py", description='Run MODSIR-19 simulator on provided '
+    parser = argparse.ArgumentParser(prog="python run_simulator.py", description='Run Flowsim simulator on provided '
                                                                                  'parameter sets.')
     parser.add_argument('-p', '--params', metavar='file', type=str, nargs='*',
                         help='pathname to parameter set (JSON)')
@@ -80,7 +80,7 @@ if __name__ == "__main__":
         if args.save:
             basename = ''.join([outputdir, timestamp, args.save])
         else:
-            basename = ''.join([outputdir, timestamp, 'commando_covid_run'])
+            basename = ''.join([outputdir, timestamp, 'flowsim_run'])
 
     ''' default parameters are stored in three distinct groups '''
     default_params = get_default_params()

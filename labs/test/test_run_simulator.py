@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 """
-    This file is part of MODSIR19.
+    This file is part of Flowsim.
 
-    MODSIR19 is free software: you can redistribute it and/or modify
+    Flowsim is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    MODSIR19 is distributed in the hope that it will be useful,
+    Flowsim is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU Lesser General Public License for more details.
 
     You should have received a copy of the GNU Lesser General Public License
-    along with MODSIR19.  If not, see <https://www.gnu.org/licenses/>.
+    along with Flowsim.  If not, see <https://www.gnu.org/licenses/>.
 
     Copyright (c) 2020 Bart Lamiroy
     e-mail: Bart.Lamiroy@univ-lorraine.fr
@@ -35,8 +35,8 @@ class TestRunSimulator(unittest.TestCase):
     def test_simulator_execution(self):
         param_pathname = './labs/test_data/default_parameters.json'
         series = 'SI'
-        prefix = 'commando_covid_run'
-        reference_file = './labs/test_data/commando_covid_run_SI_baseline.csv'
+        prefix = 'flowsim_run'
+        reference_file = './labs/test_data/flowsim_run_SI_baseline.csv'
 
         self.assertTrue(os.path.exists(param_pathname),
                         f'{param_pathname} does not exist')

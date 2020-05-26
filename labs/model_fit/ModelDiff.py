@@ -1,33 +1,32 @@
 # -*- coding: utf-8 -*-
 """
-    This file is part of MODSIR19.
+    This file is part of Flowsim.
 
-    MODSIR19 is free software: you can redistribute it and/or modify
+    Flowsim is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    MODSIR19 is distributed in the hope that it will be useful,
+    Flowsim is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU Lesser General Public License for more details.
 
     You should have received a copy of the GNU Lesser General Public License
-    along with MODSIR19.  If not, see <https://www.gnu.org/licenses/>.
+    along with Flowsim.  If not, see <https://www.gnu.org/licenses/>.
 
     Copyright (c) 2020 Pierre-Etienne Moreau, Bart Lamiroy
     e-mail: Pierre-Etienne.Moreau@univ-lorraine.fr, Bart.Lamiroy@univ-lorraine.fr
+
+    SEIR model based on differential equations extended to hospitalisation
 """
-
-""" SEIR model based on differential equations extended to hospitalisation """
-
-
-
 
 from typing import Dict, List
 import numpy as np
 from scipy.integrate import odeint
 from labs.defaults import get_default_params
+
+
 def deriv(compartiments, t, beta, parameters: Dict[str, any]) -> tuple:
     """
         I = IR + IH - infectés
@@ -87,16 +86,16 @@ def deriv(compartiments, t, beta, parameters: Dict[str, any]) -> tuple:
     dEdt = beta(t) * I * SE / total_nb - 1 / dm_incub * INCUB
 
     dIdt = 1 / dm_incub * INCUB - gamma * pc_ir * I - \
-        1 / dm_IC * pc_IC * I - 1 / dm_IM * pc_IM * I
+           1 / dm_IC * pc_IC * I - 1 / dm_IM * pc_IM * I
 
     dMdt = 1 / dm_IM * pc_IM * I - 1 / dm_MD * pc_sm_dc * SM - \
-        1 / dm_MC * pc_sm_si * SM - 1 / dm_MR * pc_sm_out * SM
+           1 / dm_MC * pc_sm_si * SM - 1 / dm_MR * pc_sm_out * SM
 
     dCdt = 1 / dm_IC * pc_IC * I + 1 / dm_MC * pc_sm_si * SM - \
-        1 / dm_CD * pc_si_dc * SI - 1 / dm_CR * pc_si_out * SI
+           1 / dm_CD * pc_si_dc * SI - 1 / dm_CR * pc_si_out * SI
 
     dRdt = gamma * pc_ir * I + 1 / dm_CR * \
-        pc_si_out * SI + 1 / dm_MR * pc_sm_out * SM
+           pc_si_out * SI + 1 / dm_MR * pc_sm_out * SM
 
     dDdt = 1 / dm_CD * pc_si_dc * SI + 1 / dm_MD * pc_sm_dc * SM
 
@@ -104,7 +103,6 @@ def deriv(compartiments, t, beta, parameters: Dict[str, any]) -> tuple:
 
 
 def model_diff(parameters: Dict[str, any], series: List[str] = None, **kwargs: Dict[str, any]) -> Dict[str, any]:
-
     parameters = dict(parameters)
 
     other_arguments = dict(kwargs)
@@ -131,9 +129,7 @@ def model_diff(parameters: Dict[str, any], series: List[str] = None, **kwargs: D
         'R0_start']
     r0_confinement = parameters['beta_post'] * parameters['dm_r'] if 'R0_confinement' not in parameters.keys() else \
         parameters['R0_confinement']
-    r0_end = parameters['beta_end'] * \
-        parameters['dm_r'] if 'R0_end' not in parameters.keys(
-    ) else parameters['R0_end']
+    r0_end = parameters['beta_end'] * parameters['dm_r'] if 'R0_end' not in parameters.keys() else parameters['R0_end']
 
     gamma = 1.0 / parameters['dm_r']  # dmg dm_IR
 
@@ -151,14 +147,14 @@ def model_diff(parameters: Dict[str, any], series: List[str] = None, **kwargs: D
 
     n_population = parameters['population']
 
-    y0 = n_population - \
-        parameters['patient0'], parameters['patient0'], 0.0, 0.0, 0.0, 0.0, 0.0
+    y0 = n_population - parameters['patient0'], parameters['patient0'], 0.0, 0.0, 0.0, 0.0, 0.0
     t = np.linspace(0, parameters['lim_time'] - 1, parameters['lim_time'])
 
     ret = odeint(deriv, y0, t, args=(beta, parameters))
-    SE, INCUB, I, SM, SI, R, DC = ret.T
+    se_series, incub_series, i_series, sm_series, si_series, r_series, dc_series = ret.T
     # R0_over_time = [beta(i) / gamma for i in range(len(t))]
 
-    return {'time': t, 'series': {'SE': SE, 'INCUB': INCUB, 'I': I, 'SM': SM, 'SI': SI, 'R': R, 'DC': DC},
+    return {'time': t, 'series': {'SE': se_series, 'INCUB': incub_series, 'I': i_series, 'SM': sm_series,
+                                  'SI': si_series, 'R': r_series, 'DC': dc_series},
             # 'R0': R0_over_time
             }

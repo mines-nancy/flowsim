@@ -1,6 +1,25 @@
 # -*- coding: utf-8 -*-
 # The code on gaussian processes gas been adapted from Imperial College's CO493
-# "Probabilistic Inferrence" lead by Dr. Mark Van der Wilk
+# "Probabilistic Inference" lead by Dr. Mark Van der Wilk
+"""
+    This file is part of Flowsim.
+
+    Flowsim is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Flowsim is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with Flowsim.  If not, see <https://www.gnu.org/licenses/>.
+
+    Copyright (c) 2020 Paul Festor
+    e-mail: paul.festor2@etu.univ-lorraine.fr
+"""
 
 import numpy as np
 
