@@ -61,9 +61,9 @@ class TestOptimise(unittest.TestCase):
 
             for (p_file, d_file) in zip(param_file_list, default_file_list):
                 self.assertTrue(os.path.exists(d_file),
-                                f'Process did not create {os.path.splitext(os.path.basename(d_file))[0]}')
+                                f'Process did not create {os.path.basename(d_file)}')
                 self.assertTrue(os.path.exists(p_file),
-                                f'Process did not create {os.path.splitext(os.path.basename(p_file))[0]}')
+                                f'Process did not create {os.path.basename(p_file)}')
                 self.assertTrue(filecmp.cmp(d_file, p_file), f'Files {d_file} and {p_file} are not equal')
                 '''
                 with open(p_file) as f:

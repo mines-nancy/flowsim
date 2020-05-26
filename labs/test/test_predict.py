@@ -48,7 +48,7 @@ class TestPredict(unittest.TestCase):
 
             for d_file in default_file_list:
                 self.assertTrue(os.path.exists(d_file),
-                                f'Process did not create {os.path.splitext(os.path.basename(d_file))[0]}')
+                                f'Process did not create {os.path.basename(d_file)}')
 
 
 if __name__ == '__main__':
