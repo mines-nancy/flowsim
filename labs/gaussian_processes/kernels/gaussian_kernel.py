@@ -1,12 +1,31 @@
 # -*- coding: utf-8 -*-
 # The code on gaussian processes gas been adapted from Imperial College's CO493
-# "Probabilistic Inferrence" lead by Dr. Mark Van der Wilk
+# "Probabilistic Inference" lead by Dr. Mark Van der Wilk
+"""
+    This file is part of FLOWSIM.
 
+    FLOWSIM is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FLOWSIM is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FLOWSIM.  If not, see <https://www.gnu.org/licenses/>.
+
+    Copyright (c) 2020 Paul Festor
+    e-mail: paul.festor2@etu.univ-lorraine.fr
+"""
 import numpy as np
 
 from .abstract_kernel import Kernel
+from .abstract_kernel_scikit import SKernel
 
-
+""" @BUG replacing parent class Kernel with SKernel gives different behaviour ... """
 class GaussianKernel(Kernel):
     def __init__(self,
                  log_amplitude: float,
@@ -37,10 +56,4 @@ class GaussianKernel(Kernel):
         )
 
         return covariance_matrix
-
-    def __call__(self,
-                 X: np.ndarray,
-                 Y: np.ndarray,
-                 ) -> np.ndarray:
-        return self.get_covariance_matrix(X, Y)
 

@@ -1,11 +1,27 @@
 # -*- coding: utf-8 -*-
-# The code on gaussian processes gas been adapted from Imperial College's CO493
+# The code on gaussian processes has been adapted from Imperial College's CO493
 # "Probabilistic Inference" lead by Dr. Mark Van der Wilk
 """
-    Authors: Bart Lamiroy (Bart.Lamiroy@univ-lorraine.fr)
-             Paul Festor
+    This file is part of FLOWSIM.
 
-    Invoke as python -m labs.gaussian_process.gp_in_practice [options] from the server directory to run the simulator
+    FLOWSIM is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FLOWSIM is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FLOWSIM.  If not, see <https://www.gnu.org/licenses/>.
+
+    Copyright (c) 2020 Bart Lamiroy, Paul Festor
+    e-mail: Bart.Lamiroy@univ-lorraine.fr, paul.festor2@etu.univ-lorraine.fr
+"""
+"""
+    Invoke as python3 -m labs.gaussian_process.predict [options] from the server directory to run the simulator
 """
 
 import matplotlib.pyplot as plt
@@ -29,39 +45,41 @@ from ..defaults import get_default_params
     array : liste de points de référence [x,y] sous forme de vecteur numpy triée de façon croissante selon x
 '''
 
+
 def continuous_from_array_opt(xs: np.ndarray, data: np.ndarray) -> np.ndarray:
     """ @TODO currently np.interpolate expands as constant value beyond boundaries, to be changed to continue
         linear interpolation """
     return np.interp(xs, data[:, 0], data[:, 1]).reshape(-1, 1)
 
+
 def continuous_from_array(xs: np.ndarray, data: np.ndarray) -> np.ndarray:
     interpolation = list()
 
     for x in list(xs.flatten()):
-        x_idx = bisect(data[:,0], x)
+        x_idx = bisect(data[:, 0], x)
         # print("2D (x,x_idx) ",x,x_idx)
         if x_idx >= len(data) - 1:
-            lhs = data[-2,1]
-            rhs = data[-1,1]
-            interpolation.append(lhs + (rhs - lhs) * (x - data[-2,0]) / (data[-1,0] - data[-2,0]))
+            lhs = data[-2, 1]
+            rhs = data[-1, 1]
+            interpolation.append(lhs + (rhs - lhs) * (x - data[-2, 0]) / (data[-1, 0] - data[-2, 0]))
         elif x_idx <= 0:
-            lhs = data[0,1]
-            rhs = data[1,1]
-            interpolation.append(lhs + (rhs - lhs) * (x - data[1,0]) / (data[0,0] - data[1,0]))
+            lhs = data[0, 1]
+            rhs = data[1, 1]
+            interpolation.append(lhs + (rhs - lhs) * (x - data[1, 0]) / (data[0, 0] - data[1, 0]))
         else:
-            lhs = data[x_idx - 1,1]
-            rhs = data[x_idx,1]
+            lhs = data[x_idx - 1, 1]
+            rhs = data[x_idx, 1]
             # v = lhs + (rhs - lhs)*(x - data[x_idx][0])/(data[x_idx+1][0] - data[x_idx][0])
             # v = lhs + (rhs - lhs)*(x - data[x_idx-1][0])/(data[x_idx-1][0] - data[x_idx][0])
             # print("2D ", lhs, v, rhs)
-            interpolation.append(lhs + (rhs - lhs) * (x - data[x_idx - 1,0]) / (data[x_idx,0] - data[x_idx - 1,0]))
+            interpolation.append(lhs + (rhs - lhs) * (x - data[x_idx - 1, 0]) / (data[x_idx, 0] - data[x_idx - 1, 0]))
 
     return np.array(interpolation).reshape(-1, 1)
 
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser(prog="python gp_in_practice.py", description='Display results of gaussian process')
+    parser = argparse.ArgumentParser(prog="python predict.py", description='Display results of gaussian process')
     parser.add_argument('-p', '--prior', metavar='priorfile', type=str, nargs=1,
                         help='pathname to prior data point set (CSV format)')
     parser.add_argument('-i', '--input', metavar='datafile', type=str, nargs=1,
@@ -100,7 +118,7 @@ if __name__ == '__main__':
         if args.save:
             basename = outputdir + timestamp + args.save
         else:
-            basename = outputdir + timestamp + 'commando_covid_predict'
+            basename = outputdir + timestamp + 'flowsim_predict'
 
     ''' @TODO find out what all these parameters actually mean '''
     kernel = GaussianKernel(10, 1, 1)
@@ -166,12 +184,14 @@ if __name__ == '__main__':
                                 136.0747885821544, 132.712614060573, 129.3761574889298, 126.07466307459195,
                                 122.81569592779188]
         prior_values = np.array([[x, y] for (x, y) in
-                        zip(range(0 + decalage, len(default_prior_values) + decalage), default_prior_values)]).reshape([-1, 2])
+                                 zip(range(0 + decalage, len(default_prior_values) + decalage),
+                                     default_prior_values)]).reshape([-1, 2])
 
     prior_mean_2D = lambda x: continuous_from_array(x, prior_values)
 
     # gp = GaussianProcess(kernel, target_x_train, target_y_train, prior_mean=(lambda x: x))
-    gp = GaussianProcess(kernel, target_x_train, target_y_train, prior_mean=(lambda x: continuous_from_array(x, prior_values)))
+    gp = GaussianProcess(kernel, target_x_train, target_y_train,
+                         prior_mean=(lambda x: continuous_from_array(x, prior_values)))
 
     gp.prior_mean = lambda x: continuous_from_array(x, prior_values)
     opt_params = gp.optimise_parameters().x

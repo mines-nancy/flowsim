@@ -36,7 +36,7 @@ from .defaults import get_default_params, import_json
 
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(prog="python run_simulator.py", description='Run MODSIR-19 simulator on provided '
+    parser = argparse.ArgumentParser(prog="python run_simulator.py", description='Run Flowsim simulator on provided '
                                                                                  'parameter sets.')
     parser.add_argument('-p', '--params', metavar='file', type=str, nargs='*',
                         help='pathname to parameter set (JSON)')
@@ -81,7 +81,7 @@ if __name__ == "__main__":
         if args.save:
             basename = ''.join([outputdir, timestamp, args.save])
         else:
-            basename = ''.join([outputdir, timestamp, 'commando_covid_run'])
+            basename = ''.join([outputdir, timestamp, 'flowsim_run'])
 
     ''' default parameters are stored in three distinct groups '''
     default_params = get_default_params()

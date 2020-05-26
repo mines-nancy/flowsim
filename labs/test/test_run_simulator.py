@@ -35,8 +35,8 @@ class TestRunSimulator(unittest.TestCase):
     def test_simulator_execution(self):
         param_pathname = './labs/test_data/default_parameters.json'
         series = 'SI'
-        prefix = 'commando_covid_run'
-        reference_file = './labs/test_data/commando_covid_run_SI_baseline.csv'
+        prefix = 'flowsim_run'
+        reference_file = './labs/test_data/flowsim_run_SI_baseline.csv'
 
         self.assertTrue(os.path.exists(param_pathname),
                         f'{param_pathname} does not exist')

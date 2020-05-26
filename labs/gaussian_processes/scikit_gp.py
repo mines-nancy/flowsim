@@ -1,5 +1,23 @@
 # -*- coding: utf-8 -*-
+"""
+    This file is part of FLOWSIM.
 
+    FLOWSIM is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    FLOWSIM is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FLOWSIM.  If not, see <https://www.gnu.org/licenses/>.
+
+    Copyright (c) 2020 Bart Lamiroy
+    e-mail: Bart.Lamiroy@univ-lorraine.fr
+"""
 """ Invoke as python -m labs.gaussian_process.skikit_gp [options] from the server directory to run the simulator
 """
 
@@ -19,7 +37,7 @@ import datetime
 import pandas as pd
 from bisect import bisect
 
-from ..defaults import get_default_params
+from labs.defaults import get_default_params
 
 '''
     Fonction d'interpolation linéaire.parameters
@@ -180,10 +198,10 @@ if __name__ == '__main__':
     # kernel = DotProduct() + WhiteKernel()
     kernel = 1.0 * RationalQuadratic(length_scale=1.0, alpha=0.1)
     # kernel = GaussianKernel(10, 1, 1)
-    # kernel = RBF()
+    kernel = RBF(1.0, (0.01, 15))
 
-    np_priors_x = np.array(np_priors[:,0])[:, np.newaxis]
-    np_priors_y = np.array(np_priors[:,1])[:, np.newaxis]
+    np_priors_x = np.array(np_priors[:, 0])[:, np.newaxis]
+    np_priors_y = np.array(np_priors[:, 1])[:, np.newaxis]
 
     gpr = GaussianProcessRegressor(kernel=kernel)
 
@@ -195,9 +213,14 @@ if __name__ == '__main__':
     plt.figure(figsize=(8, 8))
     plt.subplot(2, 1, 1)
 
-    X_ = np.linspace(0 + decalage, len(np_priors)-1 + decalage, len(np_priors))
+    X_ = np.linspace(0 + decalage, len(np_priors) - 1 + decalage, len(np_priors))
 
+    """ @BUG line below is what we need, but it gives an error """
     y_mean, y_std = gpr.predict(X_[:, np.newaxis], return_std=True)
+    """ @TOTO be able to remove 2 following lines and have above @BUG solved """
+    # y_mean = gpr.predict(X_[:, np.newaxis], return_std=False)
+    # y_std = np.zeros(len(y_mean))
+
     plt.plot(X_, y_mean, 'r--', zorder=9)
     plt.fill_between(X_, (y_mean - y_std[:, np.newaxis]).flatten(), (y_mean + y_std[:, np.newaxis]).flatten(),
                      alpha=0.2, color='k')
@@ -207,18 +230,23 @@ if __name__ == '__main__':
     # Generate data and fit GP
 
     X = target_x_train[:, np.newaxis]
-    y = target_y_train[:, np.newaxis]-continuous_from_array(X,np_priors)
+    y = target_y_train[:, np.newaxis] - continuous_from_array(X, np_priors)
 
     gpr.fit(X, y)
 
     # Plot posterior
+    """ @BUG line below is what we need, but it gives an error """
     y_mean, y_std = gpr.predict(X_[:, np.newaxis], return_std=True)
+    """ @TOTO be able to remove 2 following lines and have above @BUG solved """
+    # y_mean = gpr.predict(X_[:, np.newaxis], return_std=False)
+    # y_std = np.zeros(len(y_mean))
+
     y_mean = y_mean + continuous_from_array(X_, np_priors)[:, np.newaxis]
     plt.plot(X_, y_mean, 'r', zorder=9)
 
     plt.fill_between(X_, (y_mean - y_std[:, np.newaxis]).flatten(), (y_mean + y_std[:, np.newaxis]).flatten(),
                      alpha=0.4, color='b')
-    plt.fill_between(X_, (y_mean - 3*y_std[:, np.newaxis]).flatten(), (y_mean + 3*y_std[:, np.newaxis]).flatten(),
+    plt.fill_between(X_, (y_mean - 3 * y_std[:, np.newaxis]).flatten(), (y_mean + 3 * y_std[:, np.newaxis]).flatten(),
                      alpha=0.1, color='b')
 
     y_samples = gpr.sample_y(X_[:, np.newaxis], 10)
@@ -235,16 +263,7 @@ if __name__ == '__main__':
 
     time_stop_np_gp = time.clock()
 
-    print(f'Execution numpy GP : {time_stop_np_gp-time_start_np_gp}')
-
-
-
-
-
-
-
-
-
+    print(f'Execution numpy GP : {time_stop_np_gp - time_start_np_gp}')
 
     ''' Paul '''
     Paul = not False
@@ -267,8 +286,8 @@ if __name__ == '__main__':
         gp_mean = gp.mean(plot_range).flatten()
         gp_std = gp.std(plot_range).flatten()
 
-        gp_predictions = gp.mean(target[train_sample_size:, 0]).flatten()
-        gp_std_predictions = gp.std(target[train_sample_size:, 0]).flatten()
+    gp_predictions = gp.mean(target[train_sample_size:, 0]).flatten()
+    gp_std_predictions = gp.std(target[train_sample_size:, 0]).flatten()
 
     if not args.noplot and Paul:
 
@@ -324,8 +343,6 @@ if __name__ == '__main__':
             plt.savefig(basename)
         if not args.silentplot:
             plt.show()
-
-
 
     if save_output:
         results = pd.DataFrame({'date': target[:, 0], 'value': target[:, 1]})

@@ -1,4 +1,4 @@
-# MODSIR-19 LABS Readme File
+# FLOWSIM LABS Readme File
 
 ## Introduction
 
@@ -29,7 +29,7 @@ All scripts accept the following command-line parameter flags :
 
 ### Provided scripts
 
-* `batch_run.sh` and `batch_run_alt.sh`: operational example `bash` scripts allowing to run large batch jobs and parameter passing between provided python scripts. 
+* `batch_run.sh` : operational example `bash` script allowing to run large batch jobs and parameter passing between provided python scripts. 
 Both scripts run the following tasks in sequence :
     * for a series of predetermined values `n`, estimate the optimal SIR+H model parameters given `n` observations if IC admissions;
     * generate model output for these parameters;
@@ -40,9 +40,8 @@ Both scripts run the following tasks in sequence :
 
 * `run_simulator.py`: runs the simulator using the provided simulator parameters and plots the curves specified at run-time.
 When provided, the `-s` option saves the list of curve points to `.csv`
-* `gaussian_process` (directory): contains `gp_in_practice.py` allowing to predict unseen (future) values given real observed data and an approximate (theoretical) prior (refer to `README.md` in directory).
+* `gaussian_process` (directory): contains `predict.py` allowing to predict unseen (future) values given real observed data and an approximate (theoretical) prior (refer to `README.md` in directory).
 
 * `model_fit` (directory): contains `optimise.py` allowing to estimate model parameters from observed data points using global minimisation (refer to `README.md` in directory)
 
 * `compute_khy.py`
-* `model_fitter` (**obsolete**): this code is obsolete and superseded by `optimise.py` in the `model_fit` directory.

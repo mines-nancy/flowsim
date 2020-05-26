@@ -36,10 +36,11 @@ import os.path
 from os import mkdir
 import datetime
 import argparse
-from ...models.rule import RuleChangeField
-from ..defaults import get_default_params, import_json, export_json
+from models.rule import RuleChangeField
+from labs.defaults import get_default_params, import_json, export_json
 from .ModelDiff import model_diff
 from .ModelDiscr import model_disc
+
 
 def plotter(time_indexes: np.ndarray, series: Dict[str, np.ndarray], x_ticks=None) -> None:
     series_label_base = {'SE': 'Susceptibles', 'INCUB': 'Incubés', 'I': 'Infectés', 'SI': 'Soins Intensifs',
@@ -100,7 +101,7 @@ def plotter(time_indexes: np.ndarray, series: Dict[str, np.ndarray], x_ticks=Non
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(prog="python -m optimise",
-                                     description='Fit MODSIR-19 simulator parameters on provided measured data.')
+                                     description='Fit Flowsim simulator parameters on provided measured data.')
     parser.add_argument('-p', '--params', metavar='parameters', type=str, nargs=1,
                         help='pathname to initial parameter set (JSON)')
     parser.add_argument('-v', '--variables', metavar='variables', type=str, nargs=1,
@@ -198,7 +199,7 @@ if __name__ == "__main__":
             basename = outputdir + timestamp + args.save
         else:
             basename = outputdir + timestamp + \
-                'commando_covid_fit_' + args.model[0] + '_' + optim
+                'flowsim_fit_' + args.model[0] + '_' + optim
 
     ''' defining simulator model functions '''
     if args.model[0] == 'diff':
