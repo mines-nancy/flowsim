@@ -1,28 +1,28 @@
 # -*- coding: utf-8 -*-
 """
-    This file is part of MODSIR19.
+    This file is part of FLOWSIM.
 
-    MODSIR19 is free software: you can redistribute it and/or modify
+    FLOWSIM is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    MODSIR19 is distributed in the hope that it will be useful,
+    FLOWSIM is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU Lesser General Public License for more details.
 
     You should have received a copy of the GNU Lesser General Public License
-    along with MODSIR19.  If not, see <https://www.gnu.org/licenses/>.
+    along with FLOWSIM.  If not, see <https://www.gnu.org/licenses/>.
 
     Copyright (c) 2020 Pierre-Etienne Moreau
     e-mail: Pierre-Etienne.Moreau@univ-lorraine.fr
 """
 
-from models.components.box import BoxSource, BoxTarget
-from models.components.box_dms import BoxDms
-from models.components.box_convolution import BoxConvolution
-from models.components.utils import compute_khi_exp, compute_khi_binom, compute_khi_delay
+from ..components.box import BoxSource, BoxTarget
+from ..components.box_dms import BoxDms
+from ..components.box_convolution import BoxConvolution
+from ..components.utils import compute_khi_exp, compute_khi_binom, compute_khi_delay
 from operator import add
 
 

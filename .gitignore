@@ -24,3 +24,5 @@ tags
 
 #labs outputs
 outputs
+/library_build/flowsim.egg-info/
+/library_build/build/
