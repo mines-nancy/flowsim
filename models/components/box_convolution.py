@@ -21,7 +21,7 @@
 
 import math
 from collections import deque
-from models.components.box import Box
+from .box import Box
 from typing import List
 
 

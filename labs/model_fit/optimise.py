@@ -36,10 +36,11 @@ import os.path
 from os import mkdir
 import datetime
 import argparse
-from models.rule import RuleChangeField
-from labs.defaults import get_default_params, import_json, export_json
+from ...models.rule import RuleChangeField
+from ..defaults import get_default_params, import_json, export_json
 from .ModelDiff import model_diff
 from .ModelDiscr import model_disc
+
 def plotter(time_indexes: np.ndarray, series: Dict[str, np.ndarray], x_ticks=None) -> None:
     series_label_base = {'SE': 'Susceptibles', 'INCUB': 'Incubés', 'I': 'Infectés', 'SI': 'Soins Intensifs',
                          'SM': 'Soins Médicaux', 'SS': 'Soins de Suite', 'R': 'Rétablis',

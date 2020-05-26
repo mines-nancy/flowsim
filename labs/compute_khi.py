@@ -19,7 +19,7 @@
     e-mail: Pierre-Etienne.Moreau@univ-lorraine.fr
 """
 
-from models.components.utils import compute_residuals, compute_area_and_expectation, compute_khi_exp, compute_khi_binom, compute_khi_linear, compute_khi_delay
+from flowim.models.components.utils import compute_residuals, compute_area_and_expectation, compute_khi_exp, compute_khi_binom, compute_khi_linear, compute_khi_delay
 import matplotlib.pyplot as plt
 
 

@@ -20,7 +20,7 @@
 """
 
 import math
-from models.components.box import Box
+from .box import Box
 
 
 class BoxDms(Box):

@@ -19,6 +19,12 @@ venv/bin/activate: requirements.txt
 	. venv/bin/activate; pip install -Ur requirements.txt
 	touch venv/bin/activate
 
+lib: venv
+	rm -rf library_build/build
+	rm -rf library_build/dist
+	rm -rf library_build/flowsim.egg-info
+	cd library_build; python3 setup.py sdist bdist_wheel
+
 clean:
 	rm -rf venv
 	find . -name "*.pyc" -delete

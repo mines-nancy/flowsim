@@ -31,8 +31,9 @@ import csv
 import os.path
 import argparse
 import datetime
-from models.sir_h.simulator import run_sir_h
+from flowsim.models.sir_h.simulator import run_sir_h
 from .defaults import get_default_params, import_json
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(prog="python run_simulator.py", description='Run MODSIR-19 simulator on provided '
