@@ -1,4 +1,4 @@
-# Flowsim LABS model_fit Module File
+# FLOWSIM LABS model_fit Module File
 
 ## Introduction
 

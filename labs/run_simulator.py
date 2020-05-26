@@ -1,26 +1,26 @@
 # -*- coding: utf-8 -*-
 """
-    This file is part of Flowsim.
+    This file is part of FLOWSIM.
 
-    Flowsim is free software: you can redistribute it and/or modify
+    FLOWSIM is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Flowsim is distributed in the hope that it will be useful,
+    FLOWSIM is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU Lesser General Public License for more details.
 
     You should have received a copy of the GNU Lesser General Public License
-    along with Flowsim.  If not, see <https://www.gnu.org/licenses/>.
+    along with FLOWSIM.  If not, see <https://www.gnu.org/licenses/>.
 
     Copyright (c) 2020 Bart Lamiroy
     e-mail: Bart.Lamiroy@univ-lorraine.fr
 """
 
 """
-    This is mainly demo code showing how to invoke the Flowsim simulator with
+    This is mainly demo code showing how to invoke the FLOWSIM simulator with
     default parameters or with provided file of stored parameters
     python -m labs.run_simulator [options] from the server directory to run the simulator
 """

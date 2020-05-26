@@ -1,4 +1,4 @@
-# Flowsim LABS Readme File
+# FLOWSIM LABS Readme File
 
 ## Introduction
 
