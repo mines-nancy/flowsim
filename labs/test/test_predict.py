@@ -40,7 +40,7 @@ class TestPredict(unittest.TestCase):
             self.assertTrue(os.path.exists(tmp_dirname),
                             f'Process did not create {tmp_dirname}')
 
-            args = ['-m', 'labs.gaussian_processes.predict', '--silentplot',
+            args = ['-m', 'flowsim.labs.gaussian_processes.predict', '--silentplot',
                     '--path', tmp_dirname, '-s']
             r_object = subprocess.run(['python3', *args])
             self.assertEqual(r_object.returncode, 0, f'labs.gaussian_processes.predict exited with code {r_object.returncode} and {r_object.stderr}')

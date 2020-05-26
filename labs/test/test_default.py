@@ -22,8 +22,8 @@
 import unittest
 from tempfile import NamedTemporaryFile
 from os import remove
-from labs.defaults import export_json, import_json, get_default_params
-from models.sir_h.simulator import run_sir_h
+from flowsim.labs.defaults import export_json, import_json, get_default_params
+from flowsim.models.sir_h.simulator import run_sir_h
 
 
 class TestDefault(unittest.TestCase):
