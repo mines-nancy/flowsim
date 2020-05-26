@@ -24,7 +24,7 @@
 from typing import Dict, List
 import numpy as np
 from scipy.integrate import odeint
-from labs.defaults import get_default_params
+from flowsim.labs.defaults import get_default_params
 
 
 def deriv(compartiments, t, beta, parameters: Dict[str, any]) -> tuple:
