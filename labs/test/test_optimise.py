@@ -39,7 +39,7 @@ class TestOptimise(unittest.TestCase):
                         f'{param_pathname} does not exist')
 
         with tempfile.TemporaryDirectory() as tmp_dirname:
-            args = ['-m', 'labs.model_fit.optimise', '--noplot',
+            args = ['-m', 'flowsim.labs.model_fit.optimise', '--noplot',
                     '--path', tmp_dirname, '-s']
             subprocess.call(['python3', *args])
 
@@ -49,7 +49,7 @@ class TestOptimise(unittest.TestCase):
             default_res_file = default_result_path_prefix + '.res'
             default_file_list = [default_json_file, default_opt_file, default_res_file]
 
-            args = ['-m', 'labs.model_fit.optimise', '--noplot',
+            args = ['-m', 'flowsim.labs.model_fit.optimise', '--noplot',
                     '--path', tmp_dirname, '-p', param_pathname, '-s', prefix + '2']
             subprocess.call(['python3', *args])
 

@@ -156,7 +156,7 @@ def import_json(filename: str) -> tuple:
         # print(rule_type, r['vars'])
         # print(rule_module)
 
-        module = importlib.import_module("models.rule")
+        module = importlib.import_module("flowsim.models.rule")
         class_type = getattr(module, rule_type)
         ''' @BUG there is no guarantee the order is preserved, arguments may be passed in the wrong order '''
         rule = class_type(*r['vars'].values())

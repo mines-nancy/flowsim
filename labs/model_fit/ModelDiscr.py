@@ -23,9 +23,9 @@
 
 from typing import Dict, List
 import numpy as np
-from models.sir_h.simulator import run_sir_h
-from models.rule import RuleChangeField
-from labs.defaults import get_default_params
+from flowsim.models.sir_h.simulator import run_sir_h
+from flowsim.models.rule import RuleChangeField
+from flowsim.labs.defaults import get_default_params
 
 
 def model_disc(model_params: Dict[str, any], series: List[str] = None, **kwargs: Dict[str, any]) -> Dict[str, any]:

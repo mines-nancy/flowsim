@@ -21,23 +21,21 @@
 
 """ Invoke as python -m labs.model_fit.optimise [options] from the server directory to run the simulator """
 
-
-
-
-import re
-from typing import Dict
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
-import lmfit
+import argparse
 import json
 import os.path
+import re
 from os import mkdir
-import datetime
-import argparse
-from models.rule import RuleChangeField
-from labs.defaults import get_default_params, import_json, export_json
+from typing import Dict
+
+import lmfit
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+
+from flowsim.labs.defaults import get_default_params, import_json, export_json
+from flowsim.models.rule import RuleChangeField
 from .ModelDiff import model_diff
 from .ModelDiscr import model_disc
 
@@ -48,9 +46,9 @@ def plotter(time_indexes: np.ndarray, series: Dict[str, np.ndarray], x_ticks=Non
                          'DC': 'Décédés'}
 
     series_label_in = {'input_' + k: v +
-                       ' IN' for k, v in series_label_base.items()}
+                                     ' IN' for k, v in series_label_base.items()}
     series_label_out = {'output_' + k: v +
-                        ' OUT' for k, v in series_label_base.items()}
+                                       ' OUT' for k, v in series_label_base.items()}
 
     series_label = {**series_label_base, **series_label_in, **series_label_out}
 
@@ -199,7 +197,7 @@ if __name__ == "__main__":
             basename = outputdir + timestamp + args.save
         else:
             basename = outputdir + timestamp + \
-                'flowsim_fit_' + args.model[0] + '_' + optim
+                       'flowsim_fit_' + args.model[0] + '_' + optim
 
     ''' defining simulator model functions '''
     if args.model[0] == 'diff':
@@ -248,6 +246,7 @@ if __name__ == "__main__":
 
     ''' defining the optimisation helper functions optimize() and fitter() '''
 
+
     def optimize(x_values, y_values, fitter_function):
         mod = lmfit.Model(fitter_function)
         for kwarg, (init, mini, maxi) in params_init_min_max.items():
@@ -257,10 +256,12 @@ if __name__ == "__main__":
         params = mod.make_params()
         return mod.fit(y_values, params, method=optim, x=x_values)
 
+
     def fitter(x, **kwargs):
         ret = simulator_model_func(
             model_parameters, simple_data_tokens, **kwargs)
         return ret['series'][full_data_tokens[0]][x]
+
 
     ''' run the oprimisation '''
     result = optimize(x_data, y_data, fitter)

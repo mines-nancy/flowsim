@@ -42,6 +42,6 @@ Both scripts run the following tasks in sequence :
 When provided, the `-s` option saves the list of curve points to `.csv`
 * `gaussian_process` (directory): contains `predict.py` allowing to predict unseen (future) values given real observed data and an approximate (theoretical) prior (refer to `README.md` in directory).
 
-* `model_fit` (directory): contains `optimise.py` allowing to estimate model parameters from observed data points using global minimisation (refer to `README.md` in directory)
+* [`model_fit`](model_fit/README.md) (directory): contains `optimise.py` allowing to estimate model parameters from observed data points using global minimisation (refer to [`README.md`](model_fit/README.md) in directory)
 
 * `compute_khy.py`
