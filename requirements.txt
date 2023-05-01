@@ -1,4 +1,4 @@
-Flask==1.1.2
+Flask==2.3.2
 flask-cors
 python-dotenv
 numpy==1.18.3
